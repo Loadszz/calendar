@@ -1,34 +1,50 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 
 <head>
-	<title>Predictions</title>
+	<title>Calendar on JavaScript</title>
 	<meta charset="UTF-8">
 	<meta name="format-detection" content="telephone=no">
-	<!-- <style>body{opacity: 0;}</style> -->
-	<link rel="stylesheet" href="css/style.min.css?_v=20221208131629">
-	<link rel="shortcut icon" href="favicon.ico">
-	<!-- <meta name="robots" content="noindex, nofollow"> -->
+	<link rel="stylesheet" href="css/style.min.css?_v=20221202165834">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 
 <body>
 	<div class="wrapper">
+		<header class="header">
+			<div class="header__container">
+			</div>
+		</header>
 		<main class="page">
-			<div class="predictions">
-				<div class="predictions__body __container">
-					<h1 class="predictions__title">Сайт предсказаний на JavaScript</h1>
-					<div class="predictions__timer">?</div>
-					<div class="predictions__text"></div>
-					<button class="predictions__start">Узнать свою судьбу</button>
-					<button class="predictions__stop">Получить предсказание</button>
+			<div class="__container">
+				<h1 class="calendar__title">Calendar on JavaScript</h1>
+				<div class="calendar__body">
+					<ul class="calendar__month">
+						<li class="calendar__month-name"></li>
+						<a class="prev _icon-arrow-left">Prev</a>
+						<a class="next _icon-arrow-right">Next</a>
+						<li class="calendar__year-name"></li>
+					</ul>
+					<ul class="calendar__week">
+						<li>Mon</li>
+						<li>Tue</li>
+						<li>Wed</li>
+						<li>Thur</li>
+						<li>Fri</li>
+						<li>Sat</li>
+						<li>Sun</li>
+					</ul>
+					<ul class="calendar__days"></ul>
 				</div>
 			</div>
-	</div>
-	</main>
+		</main>
+		<footer class="footer">
+			<div class="footer__container">
+			</div>
+		</footer>
 	</div>
 
-	<script src="js/app.min.js?_v=20221208131629"></script>
+	<script src="js/app.min.js?_v=20221202165834"></script>
 </body>
 
 </html>

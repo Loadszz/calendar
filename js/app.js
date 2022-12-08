@@ -1,64 +1,74 @@
 (() => {
-	"use strict";
-	function isWebp() {
-		function testWebP(callback) {
-			let webP = new Image;
-			webP.onload = webP.onerror = function () {
-				callback(2 == webP.height);
-			};
-			webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
-		}
-		testWebP((function (support) {
-			let className = true === support ? "webp" : "no-webp";
-			document.documentElement.classList.add(className);
-		}));
-	}
-	let addWindowScrollEvent = false;
-	setTimeout((() => {
-		if (addWindowScrollEvent) {
-			let windowScroll = new Event("windowScroll");
-			window.addEventListener("scroll", (function (e) {
-				document.dispatchEvent(windowScroll);
-			}));
-		}
-	}), 0);
-	window["FLS"] = true;
-	isWebp();
-
-	let predictionsTimer = document.querySelector(".predictions__timer");
-	let predictionsText = document.querySelector(".predictions__text");
-	let predictionsStart = document.querySelector(".predictions__start");
-	let predictionsStop = document.querySelector(".predictions__stop");
-	const predictionsObj = {
-		badPredictions: ["Сегодня тебе не повезет", "Проблемы на работе", "Сорра со знакомым", "Ты сольеш деньги", "Ты станешь лохом", "Путин сегодня не сдохнет", "Хорошие деньки ещё не близко", "Ты станешь алкоголиком", "Держись подальше от реки", "В тебе есть темная сторона"],
-		goodPredictions: ["Не стоит пренебрегать чужим мнением. Рядом с Вами находятся люди, которые искренне хотят помочь", "Все загаданные желания и намеченные планы осуществятся", "Пришло время заявить о себе, даже если это кому-то не понравится", "Сейчас в Вашей жизни наступает переломный момент, от которого зависит будущее", "Пришло время показать, кем же Вы являетесь на самом деле", "На протяжении многих лет Вам будут сопутствовать счастье, здоровье, удача и благополучие", "Впереди Вас ждет неожиданное получение денег, которое поправит Ваше пошатнувшееся материальное положение", "Не огорчайтесь, если дела идут не так, как Вам бы этого хотелось, удача уже на пороге", "Пора собирать чемоданы: Вас ждет путешествие в приятной компании", "Ваши отношения с любимым человеком продлятся долго, если Вы не будете рассказывать о них незнакомым людям"]
-	};
-	function getRandomInt(min, max) {
-		return Math.floor(Math.random() * (max - min)) + min;
-	}
-	function getRandomArr(arr) {
-		let rand = Math.floor(Math.random() * arr.length);
-		return arr[rand];
-	}
-	let delay = (wait = 100) => {
-		setInterval((() => {
-			if (predictionsStop.classList.contains("active")) predictionsTimer.innerHTML = getRandomInt(1, 100); else clearInterval(delay);
-		}), wait);
-	};
-	predictionsStart.addEventListener("click", (() => {
-		predictionsStart.classList.add("remove");
-		delay();
-		predictionsStop.classList.add("active");
-	}));
-	predictionsStop.addEventListener("click", (() => {
-		if (predictionsTimer.innerHTML >= 50) {
-			predictionsText.innerHTML = getRandomArr(predictionsObj.badPredictions);
-			predictionsText.classList.add("red");
-		}
-		if (predictionsTimer.innerHTML <= 49) {
-			predictionsText.innerHTML = getRandomArr(predictionsObj.goodPredictions);
-			predictionsText.classList.add("green");
-		}
-		predictionsStop.classList.remove("active");
-	}));
+    "use strict";
+    function isWebp() {
+        function testWebP(callback) {
+            let webP = new Image;
+            webP.onload = webP.onerror = function() {
+                callback(2 == webP.height);
+            };
+            webP.src = "data:image/webp;base64,UklGRjoAAABXRUJQVlA4IC4AAACyAgCdASoCAAIALmk0mk0iIiIiIgBoSygABc6WWgAA/veff/0PP8bA//LwYAAA";
+        }
+        testWebP((function(support) {
+            let className = true === support ? "webp" : "no-webp";
+            document.documentElement.classList.add(className);
+        }));
+    }
+    let addWindowScrollEvent = false;
+    setTimeout((() => {
+        if (addWindowScrollEvent) {
+            let windowScroll = new Event("windowScroll");
+            window.addEventListener("scroll", (function(e) {
+                document.dispatchEvent(windowScroll);
+            }));
+        }
+    }), 0);
+    window["FLS"] = true;
+    isWebp();
+    document.querySelector(".calendar__body");
+    document.querySelector(".calendar__month");
+    document.querySelector(".calendar__week");
+    const calendarDays = document.querySelector(".calendar__days");
+    const calendarMonthName = document.querySelector(".calendar__month-name");
+    const calendarYearName = document.querySelector(".calendar__year-name");
+    const arrMonthName = [ "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" ];
+    const prev = document.querySelector(".prev");
+    const next = document.querySelector(".next");
+    let nowDate = new Date;
+    let nowDay = nowDate.getDate();
+    let nowMonth = nowDate.getMonth();
+    let nowFullYear = nowDate.getFullYear();
+    function addCalendar(year, month) {
+        let monthDays = new Date(year, month + 1, 0).getDate();
+        let monthDays1 = new Date(year, month, 0).getDate();
+        let monthPrefix = new Date(year, month, 0).getDay();
+        let monthPrefix1 = new Date(year, month, 0).getDay();
+        console.log(monthDays);
+        console.log(monthPrefix);
+        let monthDaysText = "";
+        calendarMonthName.innerHTML = arrMonthName[month];
+        calendarYearName.innerHTML = year;
+        calendarDays.innerHTML = "";
+        if (monthPrefix > 0) for (let i = 1; i <= monthPrefix; i++) monthDaysText += '<li class="calendar__last-day">' + (monthDays1++ - monthPrefix1 + 1) + "</li>";
+        for (let i = 1; i <= monthDays; i++) monthDaysText += '<li class="calendar__day">' + i + "</li>";
+        calendarDays.innerHTML = monthDaysText;
+        if (month == nowMonth && year == nowFullYear) {
+            let days = calendarDays.querySelectorAll(".calendar__day");
+            days[nowDay - 1].classList.add("calendar__now-day");
+        }
+    }
+    addCalendar(nowFullYear, nowMonth);
+    prev.onclick = function() {
+        let curDate = new Date(calendarYearName.textContent, arrMonthName.indexOf(calendarMonthName.textContent));
+        curDate.setMonth(curDate.getMonth() - 1);
+        let curYear = curDate.getFullYear();
+        let curMonth = curDate.getMonth();
+        addCalendar(curYear, curMonth);
+    };
+    next.onclick = function() {
+        let curDate = new Date(calendarYearName.textContent, arrMonthName.indexOf(calendarMonthName.textContent));
+        curDate.setMonth(curDate.getMonth() + 1);
+        let curYear = curDate.getFullYear();
+        let curMonth = curDate.getMonth();
+        addCalendar(curYear, curMonth);
+    };
 })();
